@@ -1,4 +1,10 @@
 contentList:
+  - title: 'kubeweekly #196'
+    tags:
+      - '#kubereads'
+    date: 12/13/2019
+    status: delivered
+    content: ./contents/kubeweekly196.yaml
   - title: 'kubeweekly #197'
     tags:
       - '#kubereads'
