@@ -24,7 +24,6 @@ const contentListTitle = (title) => {
     return titleContent;
 }
 const yamlFileName = (title) => {
-    console.log(title)
     const yamlName = title.replace('#','').split(' ').join('')
     return yamlName;
 }
@@ -99,7 +98,6 @@ main().then(data => {
             ...headerContent,
             ...data[0]
         }
-        console.log(content)
         const yamlName = './contents/'+yamlFileName(headerContent.title)+'.yaml';
         existingContentYaml.contentList.push({
             title: headerContent.title,
