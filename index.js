@@ -23,6 +23,7 @@ const getContentListTitle = (title) => {
     return titleContent
 }
 
+
 const getFileName = (title) => {
     const name = title.replace('#','').split(' ').join('')
     return name
