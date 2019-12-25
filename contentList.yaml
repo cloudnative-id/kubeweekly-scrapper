@@ -6,6 +6,6 @@ contentList:
   title: 'kubeweekly #196'
 - content: ./contents/kubeweekly197.yaml
   date: 12/19/2019
-  status: non delivered
+  status: not delivered
   tags: ['#kubereads']
   title: 'kubeweekly #197'
