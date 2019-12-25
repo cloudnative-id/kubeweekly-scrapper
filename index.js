@@ -11,12 +11,31 @@ const kubeweekly = async () => {
         return error;
     }
 }
-const kubeWeeklyContentTitle = async (htmlRaw) => {
+
+const kubeWeeklyContentTitle = (htmlRaw) => {
     const $ = cheerio.load(htmlRaw);
     
     return $('#templateHeader').text()
 }
-const kubeWeeklyParser = (htmlRaw,contentHeadline) => {
+const contentListTitle = (title) => {
+    const regexPatternTitle = /kubeweekly(.*)#\d+/gi
+    const titleContent = title.match(regexPatternTitle)[0].toLowerCase() || null;
+    const yamlFileName = titleContent.replace('#','').split(' ').join('')
+    return titleContent;
+}
+const yamlFileName = (title) => {
+    console.log(title)
+    const yamlName = title.replace('#','').split(' ').join('')
+    return yamlName;
+}
+const getDateTitle = (title) => {
+    const regexPatternTitle = /\w+\s\d+,\s\d+/si
+    const dateParse = title.match(regexPatternTitle)
+    const date = new Date(Date.parse(dateParse)).toLocaleString().slice(0,10)
+    return date;
+}
+
+const kubeWeeklyContentParser = (htmlRaw,contentHeadline) => {
     const regexElement = /<a href=(.*?) [^>]*>(.*?)<\/a>/g;
     const regexContent = /<a href="(.*?)" [^>]*>(.*?)<\/a>/;
 
@@ -29,9 +48,13 @@ const kubeWeeklyParser = (htmlRaw,contentHeadline) => {
                 if(content.includes(contentHeadline)){
                    content.match(regexElement).map(e => {
                     let parseData = regexContent.exec(e);
+                    const contentLink = parseData[1].replace(/\n/g, " ").trim()
+                    const contentTitle = parseData[2].replace(/\n/g, " ").trim()
+                    const contentType = contentHeadline.split(' ')[1].toLowerCase()
                         result.push({
-                            title:parseData[2].trim(),
-                            link:parseData[1].trim()
+                            title:contentTitle,
+                            link:contentLink,
+                            type:contentType
                         })
                    })
             }
@@ -43,17 +66,24 @@ const kubeWeeklyParser = (htmlRaw,contentHeadline) => {
 const main = async () => {
     try {
         let result = []
+        let resultKubeweeklyContent = []
         const headlines =['The Technical','The Editorial','The Headlines']
         const kubeWeeklyContent = await kubeweekly();
-        const kubeWeeklyContentHeadline = await kubeWeeklyContentTitle(kubeWeeklyContent);
-        result.push({title:kubeWeeklyContentHeadline})
+        const kubeWeeklyContentHeadlineRaw = kubeWeeklyContentTitle(kubeWeeklyContent)
+        const dateTitle = getDateTitle(kubeWeeklyContentHeadlineRaw)
+        const contentTitle = contentListTitle(kubeWeeklyContentHeadlineRaw)
+        result.push({
+            title:contentTitle,
+            date:dateTitle,
+            source:'kubeweekly'
+        })
         headlines.map((contentHeadline) => {
-            const kubeweeklyData = kubeWeeklyParser(kubeWeeklyContent,contentHeadline)
-            result.push({
-                headline:contentHeadline,
-                data:kubeweeklyData
+           kubeWeeklyContentParser(kubeWeeklyContent,contentHeadline)
+            .map(contentKubeweekly => {
+                resultKubeweeklyContent.push(contentKubeweekly)
             })
         })
+        result.push({data:resultKubeweeklyContent})
         return result
     } catch (error) {
         return error;
@@ -61,7 +91,26 @@ const main = async () => {
 }
 
 main().then(data => {
-    let kubeweeklyYAML = yaml.safeDump(data);
-    fs.writeFileSync('kubeweekly.yaml', kubeweeklyYAML, 'utf8');
-    console.log('kubeweekly.yaml updated')
+    let existingContentYaml = yaml.safeLoad(fs.readFileSync('./contentList.yaml','utf8'));
+    let headerContent = data.shift()
+    const found = existingContentYaml.contentList.some(el => el.date === headerContent.date);
+    if(!found){
+        let content = {
+            headerContent,
+            data
+        }
+        const yamlName = './contents/'+yamlFileName(headerContent.title)+'.yaml';
+        existingContentYaml.contentList.push({
+            title: headerContent.title,
+            tags: ["#kubereads"],
+            date: headerContent.date,
+            status: 'not delivered',
+            content: yamlName
+        })
+        let kubeweeklyContentYAML = yaml.safeDump(content);
+        let kubeweeklyContentListYAML = yaml.safeDump(existingContentYaml);
+        fs.writeFileSync(yamlName, kubeweeklyContentYAML, 'utf8');
+        fs.writeFileSync('./contentList.yaml',kubeweeklyContentListYAML,'utf8')
+        console.log('kubeweekly.yaml updated')
+    }else console.log('kubeweekly not updated')
 })
