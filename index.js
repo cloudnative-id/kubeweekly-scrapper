@@ -96,9 +96,10 @@ main().then(data => {
     const found = existingContentYaml.contentList.some(el => el.date === headerContent.date);
     if(!found){
         let content = {
-            headerContent,
-            data
+            ...headerContent,
+            ...data[0]
         }
+        console.log(content)
         const yamlName = './contents/'+yamlFileName(headerContent.title)+'.yaml';
         existingContentYaml.contentList.push({
             title: headerContent.title,
