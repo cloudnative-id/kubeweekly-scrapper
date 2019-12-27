@@ -71,7 +71,7 @@ const main = async () => {
         let resultKubeweeklyContent = []
         const headlines =['The Technical','The Editorial','The Headlines']
         const kubeWeeklyContent = await kubeweekly();
-        const kubeWeeklyContentHeadlineRaw = kubeWeeklyContentTitle(kubeWeeklyContent)
+        const kubeWeeklyContentHeadlineRaw = getKubeWeeklyContentTitle(kubeWeeklyContent)
         const dateTitle = getDateTitle(kubeWeeklyContentHeadlineRaw)
         const contentTitle = getContentListTitle(kubeWeeklyContentHeadlineRaw)
         result.push({
