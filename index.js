@@ -13,9 +13,8 @@ const kubeweekly = async () => {
     }
 }
 
-const kubeWeeklyContentTitle = (htmlRaw) => {
-    const $ = cheerio.load(htmlRaw);
-    
+const getKubeWeeklyContentTitle = (rawHtml) => {
+    const $ = cheerio.load(rawHtml);
     return $('#templateHeader').text()
 }
 
@@ -24,33 +23,35 @@ const getContentListTitle = (title) => {
     const titleContent = title.match(regexPatternTitle)[0].toLowerCase() || null
     return titleContent
 }
-const yamlFileName = (title) => {
-    const yamlName = title.replace('#','').split(' ').join('')
-    return yamlName;
+
+
+const getFileName = (title) => {
+    const name = title.replace('#','').split(' ').join('')
+    return name
 }
 
 const getDateTitle = (title) => {
     const regexPatternTitle = /\w+\s\d+,\s\d+/si
     const dateParse = title.match(regexPatternTitle)
     const date = new Date(Date.parse(dateParse)).toLocaleString().slice(0,10)
-    return date;
+    return date
 }
 
 const kubeWeeklyContentParser = (htmlRaw,contentHeadline) => {
-    const regexElement = /<a href=(.*?) [^>]*>(.*?)<\/a>/g;
-    const regexContent = /<a href="(.*?)" [^>]*>(.*?)<\/a>/;
+    const regexElement = /<a href=(.*?) [^>]*>(.*?)<\/a>/g
+    const regexContent = /<a href="(.*?)" [^>]*>(.*?)<\/a>/
 
-    let result = [];
-    const $ = cheerio.load(htmlRaw);
+    let result = []
+    const $ = cheerio.load(htmlRaw)
     
     let data = $('table.mcnTextBlock > tbody.mcnTextBlockOuter')
         data.toArray().map(el => {
             let content = $.html(el)
                 if(content.includes(contentHeadline)){
                    content.match(regexElement).map(e => {
-                    let parseData = regexContent.exec(e);
-                    const contentLink = parseData[1].replace(/\n/g, " ").trim()
-                    const contentTitle = parseData[2].replace(/\n/g, " ").trim()
+                    let parsedData = regexContent.exec(e);
+                    const contentLink = parsedData[1].replace(/\n/g, " ").trim()
+                    const contentTitle = parsedData[2].replace(/\n/g, " ").trim()
                     const contentType = contentHeadline.split(' ')[1].toLowerCase()
                         result.push({
                             title:contentTitle,
@@ -103,9 +104,10 @@ main().then(data => {
             ...headerContent,
             ...data[0]
         }
-        const yamlName = './contents/'+yamlFileName(headerContent.title)+'.yaml';
-        existingContentYaml.contentList.push({
-            title: headerContent.title,
+        
+        const name = './contents/' + getFileName(header.title) + '.yaml';
+        existingContent.contentList.push({
+            title: header.title,
             tags: ["#kubereads"],
             date: header.date,
             status: 'not delivered',
