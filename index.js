@@ -2,6 +2,7 @@ const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 const fs = require('fs')
 const yaml = require('js-yaml')
+const git = require('./git')
 
 const kubeweekly = async () => {
     try {
@@ -68,12 +69,11 @@ const main = async () => {
     try {
         let result = []
         let resultKubeweeklyContent = []
-        const headlines = ['The Technical', 'The Editorial', 'The Headlines']
-        const kubeweeklyContent = await kubeweekly();
-        const kubeweeklyContentHeadlineRaw = getKubeWeeklyContentTitle(kubeweeklyContent)
-        const dateTitle = getDateTitle(kubeweeklyContentHeadlineRaw)
-        const contentTitle = getContentListTitle(kubeweeklyContentHeadlineRaw)
-
+        const headlines =['The Technical','The Editorial','The Headlines']
+        const kubeWeeklyContent = await kubeweekly();
+        const kubeWeeklyContentHeadlineRaw = kubeWeeklyContentTitle(kubeWeeklyContent)
+        const dateTitle = getDateTitle(kubeWeeklyContentHeadlineRaw)
+        const contentTitle = getContentListTitle(kubeWeeklyContentHeadlineRaw)
         result.push({
             title: contentTitle,
             date: dateTitle,
@@ -95,12 +95,13 @@ const main = async () => {
 }
 
 main().then(data => {
-    let existingContent = yaml.safeLoad(fs.readFileSync('./contentList.yaml','utf8'));
-    let header = data.shift()
-    const found = existingContent.contentList.some(el => el.date === header.date);
-    if (!found) {
-        const content = {
-            ...header,
+    git.pull()
+    let existingContentYaml = yaml.safeLoad(fs.readFileSync('./contentList.yaml','utf8'));
+    let headerContent = data.shift()
+    const found = existingContentYaml.contentList.some(el => el.date === headerContent.date);
+    if(!found){
+        let content = {
+            ...headerContent,
             ...data[0]
         }
         
@@ -112,14 +113,11 @@ main().then(data => {
             status: 'not delivered',
             content: name
         })
-
-        let kubeweeklyContentYAML = yaml.safeDump(content)
-        let kubeweeklyContentListYAML = yaml.safeDump(existingContent)
-        fs.writeFileSync(name, kubeweeklyContentYAML, 'utf8')
-        fs.writeFileSync('./contentList.yaml', kubeweeklyContentListYAML,'utf8')
-
-        console.log('Kubeweekly.yaml updated.')
-    } else {
-        console.log('Kubeweekly not updated.')
-    }
+        let kubeweeklyContentYAML = yaml.safeDump(content);
+        let kubeweeklyContentListYAML = yaml.safeDump(existingContentYaml);
+        fs.writeFileSync(yamlName, kubeweeklyContentYAML, 'utf8');
+        fs.writeFileSync('./contentList.yaml',kubeweeklyContentListYAML,'utf8')
+        git.push()
+        console.log('kubeweekly.yaml updated')
+    }else console.log('kubeweekly not updated')
 })
