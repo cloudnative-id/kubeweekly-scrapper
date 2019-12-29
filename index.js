@@ -106,7 +106,7 @@ main().then(data => {
         }
         
         const name = './contents/' + getFileName(headerContent.title) + '.yaml';
-        existingContent.contentList.push({
+        existingContentYaml.contentList.push({
             title: headerContent.title,
             tags: ["#kubereads"],
             date: headerContent.date,
@@ -115,7 +115,7 @@ main().then(data => {
         })
         let kubeweeklyContentYAML = yaml.safeDump(content);
         let kubeweeklyContentListYAML = yaml.safeDump(existingContentYaml);
-        fs.writeFileSync(yamlName, kubeweeklyContentYAML, 'utf8');
+        fs.writeFileSync(name, kubeweeklyContentYAML, 'utf8');
         fs.writeFileSync('./contentList.yaml',kubeweeklyContentListYAML,'utf8')
         git.push(headerContent.title)
         console.log('kubeweekly.yaml updated')
