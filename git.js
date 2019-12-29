@@ -6,16 +6,19 @@ const pull = () =>{
         git() 
         .addConfig('user.name', 'cncfidbot')
         .addConfig('user.email', 'cncfidbot@gmail.com')
-        .removeRemote('github')
-        .addRemote('github', remote)
-        .pull('github','master')
+        .listRemote([['--get-url']],(err,data) => {
+                if (data !== remote){
+                    git().addRemote('origin',remote)
+                }
+        })
+        .pull('origin','master')
 }
 
 const push = (filename) => {
     git()
     .add('./*')
     .commit(`update yaml (${filename})`)
-    .push(['-u', 'github', 'master'], () => console.log('update done'));
+    .push(['-u', 'origin', 'master'], () => console.log('update done'));
 }
 
 module.exports = {
