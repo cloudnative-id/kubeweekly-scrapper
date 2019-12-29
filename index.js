@@ -105,11 +105,11 @@ main().then(data => {
             ...data[0]
         }
         
-        const name = './contents/' + getFileName(header.title) + '.yaml';
+        const name = './contents/' + getFileName(headerContent.title) + '.yaml';
         existingContent.contentList.push({
-            title: header.title,
+            title: headerContent.title,
             tags: ["#kubereads"],
-            date: header.date,
+            date: headerContent.date,
             status: 'not delivered',
             content: name
         })
@@ -117,7 +117,7 @@ main().then(data => {
         let kubeweeklyContentListYAML = yaml.safeDump(existingContentYaml);
         fs.writeFileSync(yamlName, kubeweeklyContentYAML, 'utf8');
         fs.writeFileSync('./contentList.yaml',kubeweeklyContentListYAML,'utf8')
-        git.push()
+        git.push(headerContent.title)
         console.log('kubeweekly.yaml updated')
     }else console.log('kubeweekly not updated')
 })
