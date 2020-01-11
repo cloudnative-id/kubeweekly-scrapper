@@ -15,5 +15,5 @@ contentList:
     tags:
       - '#kubereads'
     date: '1/10/2020,'
-    status: not delivered
+    status: delivered
     content: ./contents/kubeweekly198.yaml
