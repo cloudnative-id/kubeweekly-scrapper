@@ -1,13 +1,19 @@
 contentList:
-- content: ./contents/kubeweekly196.yaml
-  date: 12/13/2019
-  status: delivered
-  tags:
-  - '#kubereads'
-  title: 'kubeweekly #196'
-- content: ./contents/kubeweekly197.yaml
-  date: 12/19/2019
-  status: delivered
-  tags:
-  - '#kubereads'
-  title: 'kubeweekly #197'
+  - content: ./contents/kubeweekly196.yaml
+    date: 12/13/2019
+    status: delivered
+    tags:
+      - '#kubereads'
+    title: 'kubeweekly #196'
+  - content: ./contents/kubeweekly197.yaml
+    date: 12/19/2019
+    status: delivered
+    tags:
+      - '#kubereads'
+    title: 'kubeweekly #197'
+  - title: 'kubeweekly #198'
+    tags:
+      - '#kubereads'
+    date: '1/10/2020,'
+    status: not delivered
+    content: ./contents/kubeweekly198.yaml
