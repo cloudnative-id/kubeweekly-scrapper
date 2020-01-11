@@ -11,3 +11,9 @@ contentList:
     date: 12/19/2019
     status: delivered
     content: ./contents/kubeweekly197.yaml
+  - title: 'kubeweekly #198'
+    tags:
+      - '#kubereads'
+    date: '1/10/2020,'
+    status: not delivered
+    content: ./contents/kubeweekly198.yaml

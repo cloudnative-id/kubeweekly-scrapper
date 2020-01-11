@@ -1,0 +1,91 @@
+title: 'kubeweekly #198'
+date: '1/10/2020,'
+source: kubeweekly
+data:
+  - title: >-
+      Consistent OIDC authentication across multiple EKS clusters using
+      Kube-OIDC-Proxy
+    link: >-
+      https://aws.amazon.com/blogs/opensource/consistent-oidc-authentication-across-multiple-eks-clusters-using-kube-oidc-proxy/
+    type: technical
+  - title: How to Monitor Kubernetes API Server
+    link: 'https://sysdig.com/blog/monitor-kubernetes-api-server/'
+    type: technical
+  - title: Containers more secured? Use cri-o Kata with Oracle Linux on Oracle Cloud
+    link: >-
+      https://medium.com/@mschildmeijer/containers-more-secured-use-cri-o-kata-with-oracle-linux-on-oracle-cloud-241550226c4d
+    type: technical
+  - title: Setting up a single master Kubernetes cluster on Azure using kubeadm
+    link: >-
+      https://dev.to/adudko/setting-up-a-single-master-kubernetes-cluster-on-azure-using-kubeadm-1cjn
+    type: technical
+  - title: Navigating network services and policy with Helm
+    link: >-
+      https://rx-m.com/kubernetes/navigating-network-services-and-policy-with-helm-2/
+    type: technical
+  - title: The poor state of Kubernetes horizontal pod autoscaling
+    link: 'http://www.wjwh.eu/posts/2020-01-04-kubernetes-autoscaling.html'
+    type: technical
+  - title: '2019 My year in review: inlets'
+    link: 'https://blog.alexellis.io/2019-my-year-in-review-inlets/'
+    type: technical
+  - title: >-
+      OSS Unboxing: Revisiting Gatekeeper &#x2013; Policy Controller for
+      Kubernetes
+    link: 'https://youtu.be/2OWT1zQa43Q'
+    type: technical
+  - title: 'pingcap/chaos-mesh: A Chaos Engineering Platform for Kubernetes'
+    link: 'https://github.com/pingcap/chaos-mesh'
+    type: technical
+  - title: >-
+      ChubaoFS: The Cloud Native Computing Foundation&#x2019;s Speedy New
+      Distributed File System
+    link: >-
+      https://thenewstack.io/chubaofs-the-cloud-native-computing-foundations-speedy-new-distributed-file-system/
+    type: technical
+  - title: Testing of CSI drivers
+    link: 'https://kubernetes.io/blog/2020/01/08/testing-of-csi-drivers/'
+    type: technical
+  - title: >-
+      Short Talks: A Conversation with Kelsey Hightower &#x2013; OpenShift
+      Commons Briefing
+    link: 'https://youtu.be/YYHp0oksor4'
+    type: editorial
+  - title: 'Helm 3 Is Almost Boring and That&#x2019;s a Great Sign of Maturity'
+    link: >-
+      https://thenewstack.io/helm-3-is-almost-boring-and-thats-a-great-sign-of-maturity/
+    type: editorial
+  - title: 'OpenShift and Kubernetes, with Clayton Coleman'
+    link: 'https://kubernetespodcast.com/episode/085-openshift-and-kubernetes/'
+    type: editorial
+  - title: 'We are the Reddit Infrastructure team: AMA on Kubernetes'
+    link: >-
+      https://old.reddit.com/r/kubernetes/comments/ebxrkp/we_are_the_reddit_infrastructure_team_ama_about/
+    type: editorial
+  - title: Farewell from Kontena
+    link: 'https://blog.kontena.io/farewell/'
+    type: editorial
+  - title: >-
+      Katie Gamanji on Cond&#xE9; Nast&#x2019;s Kubernetes Platform,
+      Self-Service, and the Federation and Cluster APIs
+    link: 'https://www.infoq.com/podcasts/kubernetes-self-service-cluster-api/'
+    type: editorial
+  - title: TOC Votes to Move Falco into CNCF Incubator
+    link: >-
+      https://www.cncf.io/blog/2020/01/08/toc-votes-to-move-falco-into-cncf-incubator/
+    type: editorial
+  - title: >-
+      Certified Kubernetes Application Developer (CKAD) Certification is Now
+      Valid for 3 Years
+    link: >-
+      https://www.cncf.io/blog/2020/01/09/certified-kubernetes-application-developer-ckad-certification-is-now-valid-for-3-years/
+    type: editorial
+  - title: '<span style="font-size:18px">kubectl tree</span>'
+    link: 'https://ahmet.im/blog/kubectl-tree/'
+    type: headlines
+  - title: >-
+      <span style="font-size:18px">KubeCon + CloudNativeCon North America 2019
+      Conference Transparency Report</span>
+    link: >-
+      https://www.cncf.io/blog/2020/01/09/kubecon-cloudnativecon-north-america-2019-conference-transparency-report-the-biggest-kubecon-cloudnativecon-to-date/
+    type: headlines
